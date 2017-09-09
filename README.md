@@ -25,12 +25,10 @@ $ cd ..
 $ make
 $ ./bin/main -e="<A sequence of numbers in double quotes>"
 ```
-<br>
-The last command can be replaced with the following line <br>
+The last command can be replaced with the following line
 ```
 $ ./bin/main -f="<A sequence of numbers file name>"
 ```
-<br> 
 **Examples** <br>
 ```
 $ cd src/

@@ -11,7 +11,6 @@ Tool to parse <a href="https://en.wikipedia.org/wiki/Nested_word" target="_blank
      ```
      $ ./get_nested_words.sh -r <The nested word expression> -f <A sequence of numbers file name> -e <A sequence of numbers in double quotes(\"\")> 
      ```
-     <br><br>
      **Note**: Provide either the file containing the sequence using `-f` or the string containing the sequence using `-e`
      <br><br>
      **Examples** <br>

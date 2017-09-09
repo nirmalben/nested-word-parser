@@ -5,7 +5,6 @@ Tool to parse Nested Words in a string. More details on Nested Word can be found
   * <a href="https://gcc.gnu.org/install/binaries.html">GCC</a>
   * <a href="https://www.python.org/downloads/">Python 2.7</a>
   * <a href="http://www.colm.net/open-source/ragel/">Ragel State Machine Compiler</a>
-<br>
 
 ### Usage 
 **Using the shell script**
@@ -14,25 +13,25 @@ Tool to parse Nested Words in a string. More details on Nested Word can be found
 **Note**: Provide either the file containing the sequence or the string containing the sequence 
 <br> 
 **Examples** 
-`./get_nested_words.sh -r \"<0.<1.2>.3>\" -e \"0 1 2 3\"`
+`./get_nested_words.sh -r \"<0.<1.2>.3>\" -e \"0 1 2 3\"` <br>
 `./get_nested_words.sh -r \"<0.<1.2>.3>\" -f \"./data/t2.csv\"`
 <br>
 <br>
 **Alternative to using the shell script**
 The shell script basically runs the following commands<br>
-`$ cd src/
+```$ cd src/
 $ ./ragel_parser -r="<The nested word expression>"
 $ cd ..
 $ make
-$ ./bin/main -e="<A sequence of numbers in double quotes>"`
+$ ./bin/main -e="<A sequence of numbers in double quotes>"```
 <br>
 The last command can be replaced with the following line
 `$ ./bin/main -f="<A sequence of numbers file name>"`
 <br> 
 **Examples** 
-`$ cd src/
+```$ cd src/
 $ ./ragel_parser -r="<0.<1.2>.3>"
 $ cd ..
 $ make
 $ ./bin/main -e="0 1 2 3"
-$ ./bin/main -f="./data/t2.csv"`
+$ ./bin/main -f="./data/t2.csv"```

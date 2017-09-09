@@ -8,7 +8,9 @@ Tool to parse <a href="https://en.wikipedia.org/wiki/Nested_word" target="_blank
 
 ### Usage 
 * **Using the shell script** <br>
-     `$ ./get_nested_words.sh -f <A sequence of numbers file name> -e <A sequence of numbers in double quotes(\"\")> -r <The nested word expression> `
+     ```
+     $ ./get_nested_words.sh -f <A sequence of numbers file name> -e <A sequence of numbers in double quotes(\"\")> -r <The nested word expression> 
+     ```
      <br><br>
      **Note**: Provide either the file containing the sequence using `-f` or the string containing the sequence using `-e`
      <br><br>

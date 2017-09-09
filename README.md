@@ -7,31 +7,36 @@ Tool to parse Nested Words in a string. More details on Nested Word can be found
   * <a href="http://www.colm.net/open-source/ragel/">Ragel State Machine Compiler</a>
 
 ### Usage 
-**Using the shell script**
+**Using the shell script** <br>
 `./get_nested_words.sh -f <A sequence of numbers file name> -e <A sequence of numbers in double quotes(\"\")> -r <The nested word expression> `
-<br>
+<br><br>
 **Note**: Provide either the file containing the sequence or the string containing the sequence 
-<br> 
-**Examples** 
+<br><br>
+**Examples** <br>
 `./get_nested_words.sh -r \"<0.<1.2>.3>\" -e \"0 1 2 3\"` <br>
 `./get_nested_words.sh -r \"<0.<1.2>.3>\" -f \"./data/t2.csv\"`
-<br>
-<br>
-**Alternative to using the shell script**
+<br><br>
+**Alternative to using the shell script** <br>
 The shell script basically runs the following commands<br>
-```$ cd src/
+```
+$ cd src/
 $ ./ragel_parser -r="<The nested word expression>"
 $ cd ..
 $ make
-$ ./bin/main -e="<A sequence of numbers in double quotes>"```
+$ ./bin/main -e="<A sequence of numbers in double quotes>"
+```
 <br>
-The last command can be replaced with the following line
-`$ ./bin/main -f="<A sequence of numbers file name>"`
+The last command can be replaced with the following line <br>
+```
+$ ./bin/main -f="<A sequence of numbers file name>"
+```
 <br> 
-**Examples** 
-```$ cd src/
+**Examples** <br>
+```
+$ cd src/
 $ ./ragel_parser -r="<0.<1.2>.3>"
 $ cd ..
 $ make
 $ ./bin/main -e="0 1 2 3"
-$ ./bin/main -f="./data/t2.csv"```
+$ ./bin/main -f="./data/t2.csv"
+```

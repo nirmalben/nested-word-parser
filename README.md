@@ -1,5 +1,5 @@
 # nested-word-parser
-Tool to parse Nested Words in a string. More details on Nested Word can be found <a href="https://en.wikipedia.org/wiki/Nested_word" target="_blank">here</a>. The <a href="https://en.wikipedia.org/wiki/Nested_word#Nested_word_automaton" target="_blank">Nested Word Automaton</a> used for parsing is build using the <a href="http://www.colm.net/open-source/ragel/">Ragel State Machine Compiler</a>.
+Tool to parse <a href="https://en.wikipedia.org/wiki/Nested_word" target="_blank">Nested Words</a> in a string. The <a href="https://en.wikipedia.org/wiki/Nested_word#Nested_word_automaton" target="_blank">Nested Word Automaton</a> used for parsing is built using the <a href="http://www.colm.net/open-source/ragel/">Ragel State Machine Compiler</a>.
 <br>
 ### Prerequisites
   * <a href="https://gcc.gnu.org/install/binaries.html">GCC</a>
@@ -13,8 +13,10 @@ Tool to parse Nested Words in a string. More details on Nested Word can be found
      **Note**: Provide either the file containing the sequence using `-f` or the string containing the sequence using `-e`
      <br><br>
      **Examples** <br>
-    `$ ./get_nested_words.sh -r \"<0.<1.2>.3>\" -e \"0 1 2 3\"` <br>
-    `$ ./get_nested_words.sh -r \"<0.<1.2>.3>\" -f \"./data/t1.csv\"` <br>
+    ```
+    $ ./get_nested_words.sh -r \"<0.<1.2>.3>\" -e \"0 1 2 3\"
+    $ ./get_nested_words.sh -r \"<0.<1.2>.3>\" -f \"./data/t1.csv\"
+    ```
     <br>
 * **Alternative to using the shell script** <br>
     The shell script basically runs the following commands<br>

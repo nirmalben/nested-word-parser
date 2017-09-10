@@ -26,11 +26,11 @@ Tool to parse <a href="https://en.wikipedia.org/wiki/Nested_word" target="_blank
     $ ./ragel_parser -r="<The nested word expression>"
     $ cd ..
     $ make
-    $ ./bin/main -e="<A sequence of numbers>"
+    $ ./bin/test -e="<A sequence of numbers>"
     ```
     The last command above can be replaced with the following command if the sequence is stored in a file:
     ```
-    $ ./bin/main -f="<A sequence of numbers file name>"
+    $ ./bin/test -f="<A sequence of numbers file name>"
     ```
     **Examples** <br>
     ```
@@ -38,6 +38,6 @@ Tool to parse <a href="https://en.wikipedia.org/wiki/Nested_word" target="_blank
     $ ./ragel_parser -r="<0.<1.2>.3>"
     $ cd ..
     $ make
-    $ ./bin/main -e="0 1 2 3"
-    $ ./bin/main -f="./data/t1.csv"
+    $ ./bin/test -e="0 1 2 3"
+    $ ./bin/test -f="./data/t1.csv"
     ```

@@ -3,7 +3,7 @@ Tool to parse <a href="https://en.wikipedia.org/wiki/Nested_word" target="_blank
 <br>
 ### Prerequisites
   * <a href="https://gcc.gnu.org/install/binaries.html">GCC</a>
-  * <a href="https://www.python.org/downloads/">Python 2.7</a>
+  * <a href="https://www.python.org/downloads/">Python 2.7.x</a>
   * <a href="http://www.colm.net/open-source/ragel/">Ragel State Machine Compiler</a>
 
 ### Usage 

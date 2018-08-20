@@ -10,6 +10,7 @@ Tool to parse <a href="https://en.wikipedia.org/wiki/Nested_word" target="_blank
 
 ### Usage
 ```
+$ python3 ./nested_word_parser.py --help
 $ python3 ./nested_word_parser.py -r <Nested Word Automaton regex> -f <Filename to parse> -i <Absolute location of the Python 3 executable>
 ```
 <br>

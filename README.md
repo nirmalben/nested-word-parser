@@ -9,28 +9,28 @@ Tool to parse <a href="https://en.wikipedia.org/wiki/Nested_word" target="_blank
   * <a href="http://www.swig.org/download.html">SWIG</a>
 
 ### Usage
-    ```
-    $ python3 ./nested_word_parser.py -r <Nested Word Automaton regex> -f <Filename to parse> -i <Absolute location of the Python 3 executable>
-    ```
-    <br><br>
-    **Examples** <br>
-    * By default, the values of the arguments are as follows:
-      ```
-      $ python3 ./nested_word_parser.py -r "<0.1.2>" -f "./data/t1.csv" -i "/usr/include/python3.4m"
-      0
-      0
-      1
-      2
-      0
-      Failure
-      0
-      0
-      1
-      2
-      2
-      Success
-      ```
-    * The below line produces the same output as above:
-      ```
-      $ python3 ./nested_word_parser.py
-      ```
+```
+$ python3 ./nested_word_parser.py -r <Nested Word Automaton regex> -f <Filename to parse> -i <Absolute location of the Python 3 executable>
+```
+<br>
+**Examples** <br>
+* By default, the values of the arguments are as follows:
+  ```
+  $ python3 ./nested_word_parser.py -r "<0.1.2>" -f "./data/t1.csv" -i "/usr/include/python3.4m"
+  0
+  0
+  1
+  2
+  0
+  Failure
+  0
+  0
+  1
+  2
+  2
+  Success
+  ```
+* The below line produces the same output as above:
+  ```
+  $ python3 ./nested_word_parser.py
+  ```

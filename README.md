@@ -32,7 +32,7 @@ $ python3 ./nested_word_parser.py -r <Nested Word Automaton regex> -f <Filename 
   2
   Success
   ```
-* The below line produces the same output as above:
+* The below line produces the same output as above (if the Python 3 executable path is valid):
   ```
   $ python3 ./nested_word_parser.py
   ```

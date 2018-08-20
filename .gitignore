@@ -1,2 +1,3 @@
 bin/
-exec/*pyc
+__pycache__/
+*.gch

@@ -1,13 +1,13 @@
 import os
-import shutil
+import sys
+sys.dont_write_bytecode = True
 
-global_alphabet_counter = 0 # counter for the number of alphabets
-global_call_counter = 0 # counter for the number of calls
+global_symbols_counter = 0  # counter for the number of alphabets
+global_call_counter = 0     # counter for the number of calls
 global_calls_list = []
-
+start_symbol = 0
 
 def parser(input):
-
     expressions = ["("]
     i = 0
     check_input(input)
@@ -26,7 +26,6 @@ def parser(input):
     expressions.append(") $~NEXT $lerr(R);")
 
     return "".join(expressions)
-
 
 def create_new_expression(input, i, counter, new_exp, isCall):
     global global_call_counter
@@ -55,13 +54,13 @@ def create_new_expression(input, i, counter, new_exp, isCall):
 
     return (new_exp, i, counter, isCall)
 
-
 def check_input(input):
-    global global_alphabet_counter
+    global global_symbols_counter
+    global start_symbol
 
     opening_count = 0
     closing_count = 0
-    alphabets = {}
+    symbols = {}
     intervalMode = False
     dot_count = 0
 
@@ -73,43 +72,42 @@ def check_input(input):
         if char == '.':
             dot_count += 1
         if char.isalpha():
-            raise ValueError("The alphabet must be integers only")
+            raise ValueError("The symbols must be integers only")
         if char.isdigit() and (not intervalMode):
-            if int(char) not in alphabets.keys():
-                alphabets[int(char)] = 1
-       
-    alphabets_list = sorted(alphabets.keys())
-    global_alphabet_counter = len(alphabets_list)
+            if int(char) not in symbols.keys():
+                symbols[int(char)] = 1
 
-    if not alphabets_list:
-        raise ValueError("The timed regular expression must include at least one alphabet")
+    symbols_list = sorted(symbols.keys())
+    global_symbols_counter = len(symbols_list)
 
-    if alphabets_list[0] is not 0:
-        raise ValueError("The alphabet must start with 0 and increment by 1.")
+    if not symbols_list:
+        raise ValueError("The regular expression must include at least one symbol")
 
-    for i in range(1, global_alphabet_counter):
-        if alphabets_list[i] - alphabets_list[i-1] > 1:
-            raise ValueError("The alphabet must start with 0 and increment by 1.")
-    
-    if not (dot_count == global_alphabet_counter - 1):
+    # if symbols_list[0] is not 0:
+    #    raise ValueError("The symbol must start with 0 and increment by 1.")
+
+    for i in range(1, global_symbols_counter):
+        if symbols_list[i] - symbols_list[i-1] > 1:
+            raise ValueError("The symbols must increment by 1.")
+
+    if not (dot_count == global_symbols_counter - 1):
         raise ValueError("Missing '.'")
 
     if not (opening_count == closing_count):
         raise ValueError("Each '<' must have a matching '>'")
 
-    return
+    start_symbol = list(symbols.keys())[0]
 
+    return
 
 def embed_actions(exp, counter):
     return exp + ") %~DE" + str(counter) + " %CHK" + str(counter) + ""
-
 
 def create_actions(file, counter):
     for x in range(counter):
         create_action_in(file, x)
         create_action_de(file, x)
         create_action_chk(file, x)
-
     return
 
 def create_action_in(file, counter):
@@ -124,22 +122,19 @@ def create_action_chk(file, counter):
     file.write("    action CHK" + str(counter) + " { CHK(" + str(counter) + ") }\n" )
     return
 
-def write_to_file(input, temprl, headerLoc):
-    dir = os.getcwd() + "/../bin/"
-    if os.path.exists(dir):
-       shutil.rmtree(dir) 
-    os.makedirs(dir)
-    f = open(temprl, "w+")
+def write_to_file(input, rl_file, nwa_header):
+    f = open(rl_file, "w+")
     ragel_expression = parser(input)
+
     f.write ("// Generated code\n")
-    f.write("#include \"" + str(headerLoc) + "\"\n\n")
+    f.write("#include \"" + str(nwa_header) + "\"\n\n")
 
-    f.write("void NWParserAutomaton::compute(int *currentState, vector<int> *currentCount, int &succ, int &reset, const int nextSymbol) {\n")
+    f.write("void NWA::compute(const int nextSymbol) {\n")
 
-    f.write("const int calls[] = {")
+    f.write("map<int, int> calls = {")
     i = 0
     while i < len(global_calls_list):
-        f.write(global_calls_list[i])
+        f.write("{" + global_calls_list[i] + ", " + str(i) + "}")
         if (i != len(global_calls_list) - 1):
             f.write(", ")
         i += 1
@@ -147,21 +142,20 @@ def write_to_file(input, temprl, headerLoc):
 
     f.write("%%{\n")
 
-
     f.write("    machine foo;\n\n")
-    f.write("    action R { reset++; STATE(foo_start); RT return; }\n")
+    f.write("    action R { failure = true; STATE(foo_start); RT return; }\n")
 
     # add call to IN(x) into NEXT as there is no facility to access the call states specifically
-    f.write("    action NEXT { for(int i = 0; i < " + str(global_call_counter) + "; ++i) { if (fc == calls[i]) { IN(i); break; } } STATE(ftargs); return; }\n\n")
+    f.write("    action NEXT { if (calls.find(fc) != calls.end()) { IN(calls[fc]); } STATE(ftargs); return; } \n\n")
 
     create_actions(f, global_call_counter)
 
-    f.write("\n    getkey nextSymbol;\n")
+    f.write("\n  getkey nextSymbol;\n")
     f.write("    variable p dummy;\n")
     f.write("    write data;\n\n")
     f.write("}%%\n\n")
 
-    f.write("int cs = *currentState, dummy = 0, eof = -1;\n\n")
+    f.write("int cs = currentState, dummy = 0, eof = -1;\n\n")
     f.write("")
     f.write("%%{\n")
     f.write("    main := " + ragel_expression + "\n")
@@ -171,16 +165,37 @@ def write_to_file(input, temprl, headerLoc):
 
     f.write("return; \n\n}\n\n")
 
-    f.write("int NWParserAutomaton::getStartState() {\n")
+    f.write("int NWA::getStartState() {\n")
     f.write("startState = %%{")
     f.write("    write start;")
     f.write("}%%;\n")
     f.write("return startState;\n")
     f.write("}\n\n")
 
-    f.write("NWParserAutomaton::NWParserAutomaton() {\n")
-    f.write("   dimCount = " + str(global_alphabet_counter) + ";\n")
+    f.write("NWA::NWA() {\n")
+    f.write("   dimCount = " + str(global_symbols_counter) + ";\n")
     f.write("   callCount = " + str(global_call_counter) + ";\n")
-    f.write("}\n")
+    f.write("   currentState = getStartState();\n")
+    f.write("   success = false;\n")
+    f.write("   failure = false;\n")
+    i = 0
+    while i < len(global_calls_list):
+        f.write("   currentCount.push_back(0);\n")
+        i += 1
+    f.write("}\n\n")
+
+    f.write("bool NWA::isSuccess() {\n")
+    f.write("   bool ret = success;\n")
+    f.write("   success = false;\n")
+    f.write("   return ret;\n")
+    f.write("}\n\n")
+
+    f.write("bool NWA::isFailure() {\n")
+    f.write("   bool ret = failure;\n")
+    f.write("   failure = false;\n")
+    f.write("   return ret;\n")
+    f.write("}\n\n")
+
+    f.close()
 
     return

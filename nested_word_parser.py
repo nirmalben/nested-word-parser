@@ -95,9 +95,9 @@ def run(regex, filename):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Timed Regular Expression Monitor")
-    parser.add_argument('-f', "--filename", default="./data/t1.csv", help='File to parse.')
-    parser.add_argument('-r', "--regex", default="<0.1.2>", help='Nested Word Automaton regex.')
-    parser.add_argument('-i', "--include", default="/usr/include/python3.4m", help='Absolute location of the Python 3 executable.')
+    parser.add_argument('-f', "--filename", default="./data/t1.csv", help='File to parse')
+    parser.add_argument('-r', "--regex", default="<0.1.2>", help='Nested Word Automaton regex')
+    parser.add_argument('-i', "--include", default="/usr/include/python3.4m", help='Absolute location of the Python 3 executable')
 
     arguments = parser.parse_args()
 
@@ -109,6 +109,9 @@ if __name__ == '__main__':
 
     if arguments.filename:
         filename = arguments.filename
+
+    if not os.path.isfile(filename):
+        raise ValueError("The sequence file provided does not exist.")
 
     if arguments.include:
         python_include = arguments.include
